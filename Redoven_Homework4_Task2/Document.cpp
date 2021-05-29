@@ -11,33 +11,34 @@ void Document::write_line(const std::string& line)
 }
 std::string Document::read_line()
 {
-	if (this->number_of_line > this->lines.size())
+	if (this->number_of_line >= this->lines.size())
 	{
 		throw std::out_of_range("out of range");
 	}
-	std::string result= this->lines[this->number_of_line-1];
+	std::string result = this->lines[this->number_of_line-1];
 	this->number_of_line++;
 	return result;	
 }
 std::string Document::read_line(const unsigned line)
 {
-	if (line > this->lines.size())
+	if (line >= this->lines.size())
 	{
 		throw std::out_of_range("out of range");
 	}
 		this->number_of_line = line + 1;
 		return this->lines[line-1];
 }
-bool Document::operator==(Document* input)
+bool Document::operator==(const Comparable* input)const
 {
-	if (this->lines.size() == input->lines.size())
+	const Document* in = dynamic_cast<const Document*>(input);
+	if (this->lines.size() == in->lines.size())
 	{
 		for (int j = 0; j < this->lines.size(); j++)
 		{
 			bool sameline = false;
 			for (int i = 0; i < this->lines.size(); i++)
 			{
-				if (this->lines[j] == input->lines[i])
+				if (this->lines[j] == in->lines[i])
 				{
 					sameline = true;
 					break;
@@ -49,11 +50,11 @@ bool Document::operator==(Document* input)
 	}
 	return false;
 }
-bool Document::operator!=(Document* input)
+bool Document::operator!=(const Comparable* input)const
 {
 	return !(*this == input);
 }
-std::string Document::to_string()
+std::string Document::to_string()const
 {
 	std::string result;
 	result += this->get_name() + '\n' + this->get_location() + '\n' + this->get_extension() + '\n';
@@ -63,7 +64,7 @@ std::string Document::to_string()
 	}
 	return result;
 }
-void Document::from_string(std::string input)
+void Document::from_string(const std::string& input)
 {
 	std::stringstream test(input);
 	std::string segment;
@@ -84,11 +85,16 @@ void Document::from_string(std::string input)
 	}
 }
 
-std::string Document::debug_print()
+std::string Document::debug_print()const
 {
 	std::string result;
 	for (int i = 0; i < this->lines.size(); i++)
 	{
-		result +=std::to_string(i+1) + ':' + lines[i] + '\n';
+		result +="Line "+std::to_string(i+1) + ':' + lines[i] + '\n';
 	}
+	return result;
+}
+Object* Document::clone()const
+{
+	return new Document(*this);
 }

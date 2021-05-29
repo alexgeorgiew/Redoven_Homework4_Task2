@@ -7,7 +7,7 @@
 class Object:public Comparable,public Debug,public Serializable{
 public:
     Object(const std::string& name, const std::string& location, const std::string& extension);
-    Object* clone()const;
+    virtual Object* clone()const=0;
     std::string get_name() const;
     std::string get_location() const;
     std::string get_extension() const;
@@ -16,6 +16,8 @@ public:
     void set_Name(std::string input);
     void set_Location(std::string input);
     void set_Extension(std::string input);
-private:
+    
+    virtual ~Object()=default;
+protected:
     std::string name, location, extension;
 };

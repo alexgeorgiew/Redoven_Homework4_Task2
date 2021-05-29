@@ -139,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Document.cpp" />
     <ClCompile Include="KeyValueDatabase.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Redoven_Homework4_Task2.cpp" />
+    <ClCompile Include="Serializable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Comparable.hpp" />

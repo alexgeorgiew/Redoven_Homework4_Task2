@@ -5,15 +5,6 @@ Object::Object(const std::string& name, const std::string& location, const std::
 	this->location = location;
 	this->extension = extension;
 }
-Object* Object::clone()const
-{
-	Object* obj;
-	obj->name = this->name;
-	obj->location = this->location;
-	obj->extension = this->extension;
-	
-   return obj;
-}
 std::string Object::get_name() const
 {
 	return this->name;
