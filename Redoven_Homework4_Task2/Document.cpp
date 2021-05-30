@@ -11,7 +11,7 @@ void Document::write_line(const std::string& line)
 }
 std::string Document::read_line()
 {
-	if (this->number_of_line >= this->lines.size())
+	if (this->number_of_line > this->lines.size())
 	{
 		throw std::out_of_range("out of range");
 	}
@@ -21,7 +21,7 @@ std::string Document::read_line()
 }
 std::string Document::read_line(const unsigned line)
 {
-	if (line >= this->lines.size())
+	if (line > this->lines.size() || line == 0)
 	{
 		throw std::out_of_range("out of range");
 	}

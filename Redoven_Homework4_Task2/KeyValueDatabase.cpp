@@ -10,7 +10,7 @@ void KeyValueDatabase:: add_entry(const std::pair<std::string, int>& entry)
 {
 	for (int i = 0; i < this->key.size(); i++)
 	{
-		if (this->key[i] == entry.first && this->value[i] == entry.second)
+		if (this->key[i] == entry.first)
 		{
 			throw std::invalid_argument("invalid argument");
 		}
@@ -56,6 +56,7 @@ bool KeyValueDatabase::operator==(const Comparable* input)const
 					{
 						same = true;
 						checked_values.push_back(j);
+						break;
 					}
 				}
             }
@@ -84,30 +85,30 @@ std::string KeyValueDatabase::to_string()const
 }
 void KeyValueDatabase::from_string(const std::string& input)
 {
-	std::stringstream info(input);
-	std::vector<std::string> info_by_lines;
+	std::stringstream input_as_stream(input);
+	std::vector<std::string> info_as_vector;
 	std::string segment;
 
-	while (std::getline(info, segment, '\n'))
+	while (std::getline(input_as_stream, segment, '\n'))
 	{
-		info_by_lines.push_back(segment);
+		info_as_vector.push_back(segment);
 	}
 	
-	this->set_Name(info_by_lines[0]);
-	this->set_Location(info_by_lines[1]);
-	this->set_Extension(info_by_lines[2]);
+	this->set_Name(info_as_vector[0]);
+	this->set_Location(info_as_vector[1]);
+	this->set_Extension(info_as_vector[2]);
 	this->key.clear();
 	this->value.clear();
 
-	for (int i = 3; i < info_by_lines.size(); i++)
+	for (int i = 3; i < info_as_vector.size(); i++)
 	{
-		std::stringstream key_value(info_by_lines[i]);
+		std::stringstream key_value(info_as_vector[i]);
 		std::vector<std::string> pairs;
 		while (std::getline(key_value, segment, ':'))
 		{
 			pairs.push_back(segment);
 		}
-		this->add_pair(pairs[0], std::stoi(pairs[1]));
+		this->add_pair(pairs[0], std::stoi(pairs[1]));   
 	}
 }
 
@@ -125,7 +126,7 @@ void KeyValueDatabase::add_pair(const std::string key, const int value)
 {
 	for (int i = 0; i < this->key.size(); i++)
 	{
-		if (this->key[i] == key && this->value[i] == value)
+		if (this->key[i] == key)
 		{
 			throw std::invalid_argument("invalid argument");
 		}
